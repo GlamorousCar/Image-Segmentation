@@ -11,6 +11,9 @@ def randomword(length):
    letters = string.ascii_lowercase
    return ''.join(random.choice(letters) for i in range(length))
 
+# определим имя директории, которую создаём
+path = "C:/Users/Иван/Pictures"
+os.makedirs(path)
 
 # загружаем фото
 def LineSegmentation(ImagePath):
@@ -20,7 +23,7 @@ def LineSegmentation(ImagePath):
     # закидываем изображение в numpy массив
     arr = np.array(ima)
     # определяем среднюю яркость изображения и корректируем ее
-    np_mean  = np.mean(arr) + np.mean(arr)/100 * 6
+    np_mean  = np.mean(arr) + np.mean(arr)/100 * 7
 
     # определяем высоту всего изображения
     Height = arr.shape
@@ -37,7 +40,6 @@ def LineSegmentation(ImagePath):
     list_with_end_index = []
     # В цикле выясняем является ли пискельная
     # строка началом или концом текстовой строки
-    #
     for i in range(len(string_average_array)-3):
         if all(string_average_array[i-2:i] > np_mean) and all(string_average_array[i:i + 3] < np_mean) and flag == 0:
             flag = 1
@@ -56,11 +58,12 @@ def LineSegmentation(ImagePath):
         list_with_end_index[i] = list_with_end_index[i] + int(math.ceil(minHeight * 0.3))
         end_array = arr[list_with_start_index[i]: list_with_end_index[i]]
         # сохраняем полученные строки
+
         img = Image.fromarray(end_array, 'RGB')
-        img.save("/Users/Иван/PycharmProjects/OCR abstract/LineImage/"+"TextLine"+str(i)+'.png')
+        img.save("/Users/Иван/PycharmProjects/OCR abstract/LineImage/"+"TextLine"+str(i)+'.png') # Создайте и укажите путь до папки,в которую будут сохраняться изобажения
 
 
-path ='C:\\Users\\Иван\\Downloads\\a.png'
+path ='C:\\Users\\Иван\\Downloads\\a.png' # укажите путь до изображения
 LineSegmentation(path)
 # print('средняя яроксть изображения  = ', np_mean)
 # Plt для вывода изображения
@@ -68,6 +71,4 @@ LineSegmentation(path)
 # plt.imshow(ima)
 # plt.colorbar()
 # plt.show()
-# составление и вывод изображения из массива с помощью PIL
-# img = Image.fromarray(arr, 'RGB')
-# img.show()
+

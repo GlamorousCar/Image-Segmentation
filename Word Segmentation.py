@@ -27,17 +27,14 @@ def WordSegmentation(ImagePath, filename):
     for i in range(height[1]):
         column_average_array.append(np.mean(arr[:, i]))
 
-    start_average_coefficient = np.mean(column_average_array) * 1.5
-    end_average_coefficient = np.mean(column_average_array) * 1.5
+    start_average_coefficient = np.mean(column_average_array) * 1.7
+    end_average_coefficient = np.mean(column_average_array) * 1.7
     list_with_start_index = []
     list_with_end_index = []
     flag = 0
     # plt.imshow(arr)
     # plt.show()
     for i in range(height[1]-7):
-        # print(i , column_average_array)
-        # print(list_with_start_index)
-        # print(list_with_end_index)
         if flag == 0 and all(column_average_array[i:i+4] < start_average_coefficient) and column_average_array[i-1] > start_average_coefficient:
             list_with_start_index.append(i)
             flag = 1
@@ -55,11 +52,9 @@ def WordSegmentation(ImagePath, filename):
         img = Image.fromarray(end_array, 'RGB')
 
         img.save("/Users/Иван/PycharmProjects/OCR abstract/WordImage/" +filename + "Word" + str(i) + '.png')
-     # plt.imshow(original_arr)
-    # plt.show()
-    # img = Image.fromarray(original_arr , 'RGB')
-    # img.show()
-array_with_line = os.listdir('/Users/Иван/PycharmProjects/OCR abstract/LineImage/')
+
+
+array_with_line = os.listdir('/Users/Иван/PycharmProjects/OCR abstract/LineImage/') # Укажите папку со всеми изображениями текстовых строк
 for i in array_with_line:
     path=os.getcwd()+'\\LineImage'+'\\'+i
     WordSegmentation(path, i)
